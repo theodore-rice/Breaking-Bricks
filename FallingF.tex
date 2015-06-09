@@ -1,0 +1,603 @@
+\documentclass{amsart}
+\usepackage{amsmath,amssymb,amsthm}
+\newcommand{\ds}{\displaystyle}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{corollary}[definition]{Corollary}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{conjecture}[definition]{Conjecture}
+\newtheorem{observation}{Observation}
+\newtheorem{claim}{Claim}
+\newtheorem{remark}[definition]{Remark}
+\newtheorem{example}{Example}
+
+\newcommand{\makebrick}[1]{\multiput#1(20,0){2}{\line(0,1){10}}\multiput#1(0,10){2}{\line(1,0){20}}}
+\title{Breaking Bricks}
+\author{Theodore Rice}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+A new combinatorial game is defined that is played on a wall of bricks like the one below.  Combinatorial games have been studied extensively and there is a body of basic techinques to analyze games.  They can be found in Winning Ways, and also Combinatorial Game Theory, among others.  I will assume the reader is familar with the basic material found in those works, including ordinal sum, atomic weight and remote stars.  We begin be describing the rules to the game and stating some elementary results.  Then we begin building a catalog of interesting positions.  From there we analyze certain sums of positions called ``hockey games.''  The paper concludes by giving insights to how one might evaluate harder positions.
+
+
+Define nim heap, atomic- atomic weight, \\
+Equality of games.\\
+$\star$- remote star is a position $*n$ that is not a subposition of $G$.\\
+Ordinal sum:  $G:H$ is the game ``$H$ stacked on $G$.''  One can move to $G:H^L$ or move in $G$, but any of these moves annihilates all of $H$.
+Also $*k'$ indicates an option of $*k$, namely $*n$ for $0\leq n\leq k-1$.
+
+\section{Game play and basic positions}
+
+
+A move consists of choosing a brick and removing every brick to the Left or Right (depending on which player you are).  Any brick that is not supported by at least one other brick falls to the ground and is removed.  In this way, Breaking Bricks is similar to Hackenbush, where unsupported edges are removed.  Breaking Bricks also seems similar to Toppling Dominoes.
+
+\begin{picture}(40,40)
+\makebrick{(0,0)}\makebrick{(20,0)}\makebrick{(40,0)}\makebrick{(60,0)}
+\makebrick{(10,10)}\makebrick{(30,10)}\makebrick{(50,10)}
+\makebrick{(20,20)}\makebrick{(40,20)}\makebrick{(60,20)}\makebrick{(10,30)}
+\end{picture}\\
+
+From the above position, if a player selects the second brick from the left on the bottom row he leaves one of the following position, depending on which way he clears bricks.\\
+
+\begin{picture}(40,40)
+\makebrick{(40,0)}\makebrick{(60,0)}
+\makebrick{(30,10)}\makebrick{(50,10)}
+\makebrick{(20,20)}\makebrick{(40,20)}\makebrick{(60,20)}\makebrick{(10,30)}
+%%Second wall
+\makebrick{(120,0)}
+\makebrick{(130,10)}
+\makebrick{(140,20)}\makebrick{(130,30)}
+
+\end{picture}\\
+
+
+
+
+
+It should be clear that a position $n$ bricks in one row or one stacked column, still has value $*n$ since either player may remove any or all of the bricks.\\
+In this paper we will consider a partizan version of Breaking Bricks where Left clears bricks to the left of the selected brick and Right clears Right.  This paper will consider this version.  Subsequent papers will consider impartial versions.
+\begin{picture}(50,20)
+\makebrick{(10,0)}\makebrick{(30,0)}\makebrick{(20,10)}
+\end{picture} $=\{*2,0,*2|*2,0,*2\}=*$ and \begin{picture}(50,20)
+\makebrick{(10,10)}\makebrick{(30,10)}\makebrick{(20,0)}
+\end{picture}  $=\{0,*2,*|0,*2,*\}=*3$
+
+ However consider the game below:\\
+
+\begin{picture}(40,20)
+\makebrick{(10,0)}\makebrick{(30,0)}
+\makebrick{(0,10)}
+\end{picture}
+
+One can see that this position is different.  Left's options are: the empty position, \begin{picture}(20,20)\makebrick{(0,0)}\end{picture} and
+\begin{picture}(40,20)(0,0)
+\makebrick{(0,0)}\makebrick{(20,0)}\end{picture}=*2,
+whereas Right's options are to: the empty position,
+\begin{picture}(40,20)\makebrick{(10,0)}\makebrick{(0,10)}\end{picture}=*2, and \begin{picture}(45,20)(0,0)
+\makebrick{(0,0)}\makebrick{(20,0)}\end{picture}=*2. \\
+ Therefore: $G:=$
+\begin{picture}(55,20)
+\makebrick{(10,0)}\makebrick{(30,0)}
+\makebrick{(0,10)}
+\end{picture} $=\{0,*,*2|0,*2\}$, which is not equivalent to a nim-heap. \\
+
+
+Now consider $H:=$ \begin{picture}(75,20)
+\makebrick{(10,0)}\makebrick{(30,0)}\makebrick{(50,0)}\makebrick{(0,10)}
+\end{picture}.  We have that $H:=\{0,*,*2,*3|0,*2,*3,G\}$.
+Positions like $G,\ H$ are interesting in their own right.\par
+%
+%
+%
+\section{Unusual positions in Breaking Bricks}
+Positions like $G,\ H$ above in breaking bricks will be called \emph{slanted}.  Consider games of the form
+$$P_{km}:=\{0,*,*2,...,*k,*(k+1)|0,*,*2,...,*k,*m\}\ m>k+1.$$
+We will see that these can appear as positions in Breaking Bricks.  It is clear that each of these games is infinitesimal, in fact atomic.  We will prove statements about these slanted games in general and use those results to analyze classes of positions in Breaking Bricks.\\
+We first argue that we can describe these games somewhat succinctly.\\
+
+\begin{lemma}
+\label{L:Addleft}
+Adding extra Left options does not affect the value of the game.  That is, for $G=\{0,*,*2,...,*k,*(k+1)|0,*,*2,...,*k,*m\}$ and $H=\{0,*,*2,...,*k,*(k+1),*(k+1+j)|0,*,*2,...,*k,*m\},\ j>0$, $G=H$.
+\end{lemma}
+
+\begin{proof}
+Consider
+$$H-G=\{0,*,*2,...,*k,*(k+1), *(k+1+j)|0,*,*2,...,*k,*m\}+\{0,*,*2,...,*k,*m|0,*,*2,...,*k,*(k+1)\}$$
+Each player has an option to each of $0,*,*2,...,*k, *(k+1),*m$; so each of these moves can be countered by the moving to corresponding option in the other component.
+Thus, the only remaining option is Left's (extra) move in $H$ to $*(k+1+j)+G$.  In that case Right can move to $*(k+1)+G$.  Subsequently, Left's options are to move to $*n+*(k+1)$ which is non-zero or to $*n+G$ for $n=0,1,...,k$, for which Right moves to $*n+*n=0$ in $G$.  So the player who moves first loses.\\
+\end{proof}
+
+So the choice for $k$ in $P_{km}$ uniquely determines the Left options.  However things are not so easy for the Right options.
+
+\begin{lemma}
+Adding Right option of $*n$ for $n>k+1$ to $G=\{0,*,...,*k,*(k+1)|0,*,...,*k,*m\}$, decreases the value of the game.
+\end{lemma}
+
+\begin{proof}
+  Consider
+$$K=\{0,*,*2,...,*k,*(k+1)|0,*,*2,...,*k,*m,*n\},\ n>k+1$$
+and $G-K=\{0,*,*2,...,*k,*(k+1)|0,*,*2,...,*k,*m\}+\{0,*,*2,...,*k,*m,*n|0,*,*2,...,*k,*(k+1)\}$. We will show that Left wins this game.
+
+If Left moves first, we will see his move to $G+*n$ wins.  Since any subsquent move by Right in $G$ moves to $*n+*p$ with $n\neq p$ and is thus an $\mathcal{N}$-position.  So Right must respond in $*n$ to $G+*q$.  If $q\leq k+1$ Left responds in $G$ by moving to $*q+*q=0$.  If $q>k+1$, Left moves to $G+*(k+1)$, from which Right must either make two unequal heaps or move to $G+*q'$ for $q'\leq k$ which we have seen is losing.\\
+Now if Right moves first, he can move to $*p-K$, or to $G+*q$, but Left can move to 0 from any of these positions by moving to the corresponding option in the other game.  Thus Left wins regardless of who goes first.
+\end{proof}
+
+\begin{remark}The above lemma demonstrates that instead of a single value for $m$, we should actually include a set of values, $M$, and refer to the game as $P_{k,\{m_i\}}$.  When $M$ is a singleton set, we denote it as its element.
+\end{remark}
+
+The game $P_{km}$ seems to be slightly in Left's favor.
+\begin{proposition}
+$P_{km}+P_{km}>0$.
+\end{proposition}
+\begin{proof}
+Consider:
+$$P_{km}+P_{km}=\{0,*,*2,...,*k,*(k+1)|0,*,*2,...,*k,*m\}+\{0,*,*2,...,*k,*(k+1)|0,*,*2,...,*k,*m\}$$
+If Right starts, and moves to $*p+P_{km}$ for $p\leq k$, Left immediately counters by moving to $*p+*p=0$.  If Right moves to $*m+P_{km}$, Left moves to $*(k+1)+P_{km}$, for which Right's responses are $*p+P_{km}$ or $*(k+1)+*p$ for $p\leq k$ in both cases.  All such positions are $\mathcal{N}$ positions.\\
+If Left starts, he moves to $P_{km}+*(k+1)$ immediately, from which Right has no good responses as we have seen.
+\end{proof}
+
+So for the game $G$ from Breaking Bricks,  $G=\{0,*,*2|0,*2\}=\{0,*|0,*2\}=P_{0,2}$ by Lemma \ref{L:Addleft}.
+
+
+We now consider that value of games $P_{km}$ in terms of the poset of games.
+%%%%%%%%%
+\begin{lemma}
+We have $P_{km}+ *(k+1)>0$.
+\label{Lemma:k1}
+\end{lemma}
+\begin{proof}
+Left can move immediately to $*(k+1)*(k+1)=0$, while Right can move to $P_{km}^R+*(k+1)$, which is two unequal nim heaps, allowing Left to win, or to $P_{km}+*(k+1)'$ in which Left can respond in $P_{km}$ to the same $*(k+1)'$ making two equal nim-heaps.
+\end{proof}
+
+\begin{theorem}\marginpar{That is if $*p$ is a Right option.}
+If $*p\in R(P_{km})$ then $G+*p||0$.
+\label{Thm:Comp1}
+\end{theorem}
+
+\begin{proof}
+If Right moves first, he moves in $G$ to $*p+*p=0$.  If Left moves first and If $*p\in L(P_{km})$, Left moves to $*p+*p=0$.  If $*p\not\in L(P_{km})$, then $p>k+1$ and Left can move to $P_{km}+*(k+1)$ which is a win for him by Lemma \ref{Lemma:k1}.\\
+\end{proof}
+
+
+\begin{theorem}
+If $*p\not\in R(P_{km})$ then $P_{km}+*p>0$.
+\label{Thm:Comp2}
+\end{theorem}
+
+\begin{proof}
+If $p=k+1$ we are done by Lemma \ref{Lemma:k1}.  If $p>k+1$, then Left can win moving first to $P_{km}+*(k+1)$.  If Right starts, and moves in $P_{km}$ he leaves two unequal nim-heaps and Left wins.  If Right moves to $P_{km}+*p'$, either he moves to $P_{km}+*(k+1)$ which Left wins, or to $P_{km}+*(k+a)$ (for some $a>0$) which Left wins or to $P_{km}+*k'$ where Left responds in $P_{km}$ to $*k'+*k'$.
+\end{proof}
+
+\begin{corollary}
+The atomic weight of $P_{km}$ is 1.
+\end{corollary}
+\begin{proof}
+Each of the options of $P_{km}$ has atomic weight 0.  Since $P_{km}>\star$, its atomic weight is the least integer $G<||2$ which is 1.
+\end{proof}
+
+\begin{proposition}
+If $k\geq 1$, $P_{km}<\uparrow$ and $P_{0m}||\uparrow$.
+\end{proposition}
+\begin{proof}
+Starting with $\{0,*|0,*m\}+\{*|0\}$, Left wins by moving to $P_{0m}+*>0$ by Theorem \ref{Thm:Comp2}.  Right moves to $0$ in $P_{0m}$ leaving $\downarrow$.\\
+In $P_{km}+\downarrow$, Right moves to $\downarrow$ as before.  If Left moves in $P_{km}$ to $*n$, Right moves to $\downarrow$.  If Left moves in $\downarrow$ to $*$, Right responds with $*$ in $P_{km}$ leaving *+*=0.
+\end{proof}
+
+\begin{proposition}
+$3\cdot P_{km}>\uparrow$. $2\cdot P_{km}||\uparrow$.
+\end{proposition}
+\begin{proof}
+The atomic weight of $3P_{km}+\downarrow$ is 2, guaranteeing a win for Left.\\
+SECOND PART COMING.
+\end{proof}
+
+
+
+Fix some $k\in\mathbb{N}$, let $M=\{*m_i : m_i>k+1 \forall i\}$. Define $P(k,M)=\{0,*,*2,...,*k|0,*,*2,...*(k-1), *m_i\}$.
+If $k=0$, then $P(0,M)=\{0|*m_i\}$.  So $P(0,\{*\})=\{0|*\}=\uparrow$.  Theorems \ref{Thm:Comp1} and \ref{Thm:Comp2} hold for these games too.
+
+\section{Hockey Sticks}
+
+We see that \begin{picture}(55,20)
+\makebrick{(10,0)}\makebrick{(30,0)}\makebrick{(0,10)}
+\end{picture} $=\{0,*,*2|0,*2,*2\}=\{0,*|0,*2\}=P_{0,2}$.  Then for $H:=$ \begin{picture}(75,20)
+\makebrick{(10,0)}\makebrick{(30,0)}\makebrick{(50,0)}\makebrick{(0,10)}
+\end{picture}. We have $H=\{0,*,*2,*3|P_{0,2},0,*2,*3\}=\{0,*,*2,*3|P_{0,2},0,*2\}$.
+
+\par
+We consider a generalization of $P_{02}$.
+\begin{definition}
+A \emph{hockey stick} $H_k$ is defined recursively as:
+$H_1= *2$, $H_2=P_{02}$, $H_n=\{0,*,H_i: i<n|0,*n,H_i:i<n\}$
+\end{definition}
+For example:\\
+$H_4=$\begin{picture}(50,40)
+\makebrick{(40,0)}\makebrick{(60,0)}
+\makebrick{(30,10)}\makebrick{(20,20)}\makebrick{(10,30)}
+\end{picture}
+
+\begin{lemma}
+\label{Lemma:Hkstar}
+For hockey sticks, and $k\geq 2$:
+\begin{enumerate}
+\item $H_k>*$
+\item $H_k||*2$
+\item $H_k ||*k$
+\item $H_k >*n,\ n\neq 2,k$
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+We prove each one in turn.  Consider $H_k+*l$.
+\begin{enumerate}
+\item Left can move immediately from $H_k+*$ to $*+*=0$.  Right can either move to $H_{k'}+*>0$ by induction, to * or to $H_k$, all of which are wins for Left on his next move.
+\item The first player can move in $H_k+*2$ by moving $H_k$ to $*2$ leaving $*2+*2=0$.
+\item If Left moves first in $H_k+*k$, he moves to $H_k+*$, which is a win for him.  If Right moves first he moves to $*k+*k=0$.
+\item If Left moves first in $H_k+*n$, he moves to $H_k+*$ winning.  If Right moves first, he moves to $H_{k'}+*n$, which wins for Left or $H_k+*k'$, which is also winning for Left.
+\end{enumerate}
+\end{proof}
+\begin{remark}\label{remark:star} This lemma shows shows that $H_k+\star>0$.
+\end{remark}
+
+\begin{theorem}
+Each $H_k$ can be simplified to
+$$H_k=\{0,H_2|0,*2,*k\}$$
+\end{theorem}
+\begin{proof}
+Start with $H_k=\{0,*,*2,H_i, i<k|0,*2,*k, H_i, i<k\}$.  Each Left option $H_i$ ($i\neq 2$) has right option $*i$ with $*i<H_k$ (since $H_k+*i>0$), so the Left option $H_i$ is reversible through $*i$ to $*i'$.  Each of these $*i's$ except $*2$ are dominated by the remaining $H_2$.  Lastly, Left's $*2$ is reversible through $*$.\\
+Finally, each Right option $H_i$ is dominated by $*k$.
+\end{proof}
+
+\begin{lemma}
+The atomic weight of each (left-leaning) hockey stick is 1.
+\end{lemma}
+\begin{proof}
+For $H_2$ each option has atomic weight 0, but $H_2>\star$ so the atomic weight is the smallest integer $G||>2$ which is 1.  For $k>2$, each of the right options has atomic weight 0 and there is one left option of atomic weight 0 and one of atomic weight 1.  The result of the calculation is an integer, and since $H_k>\star$, we again have an eccentric case.  The atomic weight is the largest integer $G||>2$, which is again 1.
+\end{proof}
+
+\section{Hockey Games: one-on-one}
+A \emph{hockey game} is a collection of hockey sticks.\\
+The hockey game $H_3+H_4+H_5-H_2-H_2$ is below:\\
+\begin{picture}(250,60)
+\makebrick{(20,0)}\makebrick{(40,0)}\makebrick{(10,10)}\makebrick{(0,20)}
+\makebrick{(85,0)}\makebrick{(105,0)}\makebrick{(75,10)}\makebrick{(65,20)}\makebrick{(55,30)}
+\makebrick{(140,0)}\makebrick{(160,0)}\makebrick{(130,10)}\makebrick{(120,20)}\makebrick{(110,30)}\makebrick{(100,40)}
+\makebrick{(190,0)}\makebrick{(210,0)}\makebrick{(220,10)}
+\makebrick{(250,0)}\makebrick{(270,0)}\makebrick{(280,10)}
+\end{picture}\\
+It is natural to ask who wins the above game.  Such games seem to be similar to flower gardens in Hackenbush.  Sticks leaning left are thought of Left's sticks and those leaning right are thought of as Right's.  These are similar to blue and red flowers in Hackenbush.  We start out by looking at games where each player has only one stick, then only one or two each and then we generalize to larger games.
+
+\begin{lemma}
+\label{Lemma:2Hk}
+If one player has two more hockey sticks than the other player that player wins.
+\end{lemma}
+\begin{proof}
+Since any hockey stick has atomic weight $\pm 1$, having two (or more sticks) is sufficient to win.
+\end{proof}
+
+\begin{lemma}
+$H_k-H_l+\star||0$
+\end{lemma}
+\begin{proof}
+Left moves to $H_k+\star$ and Right to $-H_l+\star$.
+\end{proof}
+
+\par We now explore positions with that are equal or where one player has a one stick advantage starting with the cases in which there are just one or two hockey sticks to a side.  These will serve as base cases for eventual inductions.\\
+\par We begin by making a simple observation.
+
+
+\begin{proposition}
+If $k\neq l$, then $H_k-H_l||0$, since either player can make the game $H_k-H_k=0$.
+\end{proposition}
+
+However, $H_2$ seems to be a little stronger than $H_k$ for $k>2$.  If the right nim-heap is added to a game with one stick each, the side with $H_2$ wins.
+
+
+\begin{lemma}
+\label{Lemma:*2H2}
+For $k\neq 2$,\ $H_2+*2-H_l>0$ and $H_2+*n-H_l||0$ if $n\neq 2$.
+\end{lemma}
+\begin{proof}
+If Left goes first he moves to $H_2+*2+*l>0$.  Since $l\neq 2$, $*2+*l=\star$ (or possibly $*$), and $H_2+\star>0$ and $H_2+*>0$ by Lemma \ref{Lemma:Hkstar}.\\
+If Right goes first:
+\begin{itemize}
+\item Right's move to $0+*2-H_l$ is countered by $*2+*2$
+\item Right's move to $*2+*2-H_l$ is countered by $*2+*2$
+\item Right's move to $H_2+0-H_l$ is countered by $H_2+*k$
+\item Right's move to $H_2+*-H_l$ is countered by $H_2+*$.
+\item Right's move $H_2+*2-H_2$ is countered by $H_2-H_2$
+\item Right's move to $H_2+*2+0$ is countered by $H_2+*$
+\end{itemize}
+We see that each of Right's possible moves can be countered by Left.
+\par For the second part, Left can move to $H_2+*2-H_l>0$, while Right moves in $H_2$ to either $0,\ *2$ to leave $-H_l+\star$.
+\end{proof}
+Note that after Right moves to $H_2+0-H_l$, Left could move to  $H_2-H_2$, but since $-H_2$ is not a Left option in the canonical form of $-H_l$, I used $*l$, which is.
+\par Later we will look at how different nim-heaps instead of $*2$ in the above game affect play.
+
+
+
+\begin{corollary}
+For $k,l\neq 2$:
+$$H_k+*2-H_l||0$$.
+\end{corollary}
+\begin{proof}
+The winning move is to $H_2+*2-H_l$ as Left and $H_k+*2-H_2$ as Right.
+\end{proof}
+In fact, this is the case for any nim-heap.
+
+\begin{lemma} For $k,l>2$:
+\marginpar{jk>2}
+\label{Lemma:jk>2}
+$H_k-H_l+*m||0$.
+\end{lemma}
+\begin{proof}
+If $k=l$, the first player moves to $H_k-H_l=0$.
+We will give the strategy for Left.  Right's is identical.\\
+If $m=1$, move to $H_k+*>0$.\\
+If $m=2$ and $k>2$, move to $H_2-H_l+*2$ and use the above corollary.  If $k,m=2$, move to $H_2+*l+*2>0$.  \\
+If $m,k> 2$ and $k\neq m$, move to $H_k+*m>0$ by Remark \ref{remark:star}.  If $k=m$, move to $H_k+*2+*m>0$.\\
+Note that if even if $m=0$, Left moves to $H_k+*l=H_k+\star$.
+\end{proof}
+
+\section{Hockey games: two-on-one and two-on-two}
+If one side has a extra hockey stick, we say that player has a \emph{power-play} and the other player is defending.  First we note that having a power-play is sufficient to win, as long as the defender does not have $H_2$.  We also assume that no player has a copy of one of the other's sticks, since those would sum to 0 and cancel out in the analysis.
+\begin{lemma}
+\marginpar{mnk1}
+\label{Lemma:mnk1}
+For $k_i\geq 2, l>2$, $H_{k_1}+H_{k_2}-H_l>0$.
+\end{lemma}
+\begin{proof}
+If Left moves first, he moves to $H_{k_1}+H_{k_2}>0$ by Lemma \ref{Lemma:2Hk}.\\
+If Right goes first he must move to some $H_{k_i}+*b-H_l$.  If $b=0$, the resulting position is confused with 0; if $b=2$, Left can win by moving to $H_2+*2-H_l$ (if the position isn't already that) and win by Lemma \ref{Lemma:*2H2}; otherwise the position is confused with 0 by Lemma \ref{Lemma:jk>2}.
+
+\end{proof}
+
+
+\begin{corollary}
+\label{Coro:mnk1}
+For $l>2$ and $m\geq 0$, $H_{k_1}+H_{k_2}-H_l+*m>0$.
+\end{corollary}
+\begin{proof}
+Left moves to $H_{k_1}+H_{k_2}+*l$ which has atomic weight 2.  Right moves to $H_{k_i}-H_l+*m(+2)$ (moving in $-H_k$ or $*l$ is foolish, since Left responds by moving to a position of atomic weight 2), whereby Left can move to $H_{k_i}+*m(+2)$ which is in the form $H_{k_i}+\star$.
+\end{proof}
+
+Now the case where the player defending the power play has a copy of $H_2$ is considered.  Recall that it appeared that $H_2$ was a little stronger than other $H_k$'s.
+
+\begin{lemma}
+\marginpar{mn2}
+\label{Lemma:mn2}
+For $k_i>2$: $H_{k_1}+H_{k_2}-H_2||0$.
+\end{lemma}
+\begin{proof}
+Left moves to $H_{k_1}+H_{k_2}>0$.\\
+Right moves to $H_{k_1}+*2-H_2<0$ by Lemma \ref{Lemma:*2H2}.
+\end{proof}
+
+So one copy of $H_2$ is enough to defend against two regular players.  However, the copy of $H_2$ does not help Right that much.
+
+\begin{lemma}
+
+\marginpar{mnk2}
+\label{Lemma:mnk2}
+For $k_i,l>2$, $H_{k_1}+H_{k_2}-H_l-H_2||0$.
+\end{lemma}
+\begin{proof}
+Left moves to $H_{k_1}+H_{k_2}-H_l>0$ by Lemma \ref{Lemma:mnk1}. Right moves to $H_{k_1}-H_l-H_2<0$ by Lemma \ref{Lemma:mnk1}.
+\end{proof}
+
+We now add a nim-heap to a game where the player defending a power-play has one copy of $H_2$.
+
+
+
+\begin{lemma}
+\label{Lemma:oplus}
+\marginpar{oplus}
+If $k_i\oplus m=2$ or $m=2$, $H_{k_1}+H_{k_2}-H_2+*l||0$ .  Otherwise $H_{k_1}+H_{k_2}-H_2+*l>0$.\\
+\end{lemma}
+\begin{proof}
+Left first moves to $H_{k_1}+H_{k_2}+*l>0$ (Atomic weight 2).\\
+Without loss of generality, let $k_1\oplus l=2$.  In this case, Right moves to $H_{k_2}+*k_1-H_2+*m=H_m-H_2+*2<0$; and if $m=2$, Right's move to $H_{k_1}-H_2+*2$ wins.\\
+ In the other case, (WLOG) Right must play in $H_{k_1}$ lest Left make the atomic weight 2.  After he moves $H_{k_1}$ to 0, $*2$, or $*k_1$, the resulting position is either $*p+ H_{k_2}-H_2$ ($p\neq k_2$) in which Left can move $-H_2$ to 0 leaving $H_{k_2}+\star$, or $*k_2+H_{k_2}-H_2$ in which Left moves $-H_2$ to $*$ leaving $H_{k_2}+*k_2+*=H_{k_2}+\star>0$.
+\end{proof}
+
+But two copies of $H_2$ against two larger sticks is sufficient to win if there is no nim-heap.
+\begin{lemma}
+\label{Lemma:mn22}
+\marginpar{mn22}
+For $m,n>2$, $H_{k_1}+H_{k_2}-H_2-H_2<0$.
+\end{lemma}
+\begin{proof}
+Left's only viable option is to move $-H_2$ to 0 or $*2$, whereby (WLOG) Right moves to $H_{k_2}+*2-H_2<0$.  Right moves immediately to $*2+H_m-H_2-H_2$, whereby his next move to either $*2+H_m-H_2$ or a position of atomic weight $-2$ is not preventable.
+\end{proof}
+
+\begin{lemma}
+\label{Lemma:mn22+2}
+$H_{k_1}+H_{k_2}-H_2-H_2+*2<0$
+\end{lemma}
+\begin{proof}
+Left moves to either $H_{k_1}+H_{k_2}-H_2+*2+*2=H_{k_1}+H_{k_2}-H_2$ or $H_{k_1}+H_{k_2}-H_2+*2$, whereby Right can move to $H_{k_2}+*2-H_2<0$.\\
+Right moves to $H_{k_2}-H_2-H_2+*2$ for which Left's options are to $*2+H_{k_2}-H_2+*2=H_{k_2}-H_2$ and $H_{k_2}-H_2+*2$, both of which are losing.
+\end{proof}
+
+\begin{lemma}
+\label{Lemma:mn22+*} If $k_1\oplus k_2=2$ and $l=k_i$, then $H_{k_1}+H_{k_2}-H_2-H_2+*l<0$.  Otherwise $H_{k_1}+H_{k_2}-H_2-H_2+*l||0$
+\end{lemma}
+\marginpar{Lemma:mn22+*}
+\begin{proof}
+Right can move immediately to $H_{k_1}+H_{k_2}-2H_2<0$.  Now if Left moves to $H_{k_1}+H_{k_2}-H_2+*l\ (+*2)$, Right responds in the appropriate $H_{k_i}$ to leave $H_k-H_2+*2$.
+\par However, if the above conditions are not met, one Left's moves to $H_{k_1}+H_{k_2}-H_2+*l$ or $H_{k_1}+H_{k_2}-H_2+*l+*2$ wins by Lemma \ref{Lemma:oplus} since if both are losing then $k_1=*l+2$ and $k_2=*l$ so $k_1+*k_2=*2$ (which is not the case).
+\end{proof}
+
+
+\section{Hockey games: full sides}
+We have laid the groundwork for our major theorems.  We now consider games where each side has more than 2 hockey sticks.  We see that in the absence of $H_2$ a one stick power-play is sufficient to win.
+
+\begin{theorem}
+\marginpar{oneupstar}
+\label{Thm:oneupandstar}
+For $k_i,k_j>2$ and $l\geq 0$:
+$\ds \sum_{i=1}^n H_{k_i}-\sum_{j=1}^{n-1}H_{k_j}+*l>0$.
+\end{theorem}
+\begin{proof}
+Left can move to a position of atomic weight 2.\\
+Right must play to $\ds \sum_{i'=1}^{n-1} H_{k_i'}-\sum_{j=1}^{n-1}H_{k_j}+*p$, whereby Left moves to $\ds \sum_{i'=1}^{n-1} H_{k_{i'}}-\sum_{j'=1}^{n-2}H_{k_{j'}}+*q>0$ by induction.  Here the base case is established by Corollary \ref{Coro:mnk1}.
+\end{proof}
+
+But if the sides are equal, the chances are equal.
+
+\begin{theorem}
+\label{Theorem:Equal}
+ For $k_i,k_j>2$ and $m\geq 0$: $\ds \sum_{i=1}^n H_{k_i}-\sum_{j=1}^n H_{k_j}+*m||0$.
+
+\end{theorem}
+\begin{proof}
+ From $\ds \sum_{i=1}^n H_{k_i}-\sum_{j=1}^n H_{k_j}+*m$, Left moves to $\ds \sum_{i=1}^n H_{k_i}-\sum_{j=1}^{n-1}H_{k_j}+*l>0$ by Theorem \ref{Thm:oneupandstar}. Right plays similarly.
+
+\end{proof}
+
+
+
+Including positions involving $H_2$ make things harder.  In these positions, it often does not matter whether of not there is a copy of $*2$ involved.  We indicate this possibility by including $(+*2)$ in the notation for the position.
+
+\begin{theorem}
+\label{Theorem:k2equal}
+For $N\geq 3$ and $k_i>2$ for every $i$:
+\begin{enumerate}
+\item $\ds \sum_{i=1}^n H_{k_i}-(n-1)H_2 \ (+*2)||0$
+
+\item \label{item:k2equal} $\ds \sum_{i=1}^n H_{k_i} -nH_2\  (+*2)<0$
+
+
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+We will prove this by induction.  First note that the cases where $n=2$ are handled by Lemmas \ref{Lemma:mn22} and \ref{Lemma:mn22+2}\\
+
+\begin{enumerate}
+\item Consider $\ds \sum_{i=1}^n H_{k_i}-(n-1)H_2\ (+*2)$. Left can move to $\ds \sum_{i=1}^n H_{k_i}-(n-2)H_2>0$ since the position has atomic weight 2.  Now Right can move to $\ds \sum_{i'=1}^{n-1} H_{k_{i'}} -(n-1) H_2$, which is a position of type (\ref{item:k2equal}). So by induction, Rights wins moving first.\\
+
+\item Consider $\ds \sum_{i=1}^n H_{k_i} -nH_2\ (+*2)$. Right moves to $\ds \sum_{i'=1}^{n-1} H_{k_{i'}}-nH_2$.  Now Left must respond in a copy of $-H_2$ moving to $\ds \sum_{i'=1}^{n-1} H_{k_{i'}} -(n-1)H_2\ (+*2)<0$, which is a win for Right by induction.
+\par Now, if Left moves first he must play in a copy of $-H_2$ to $\sum_{i=1}^n H_{k_i}^n -(n-1)H_2\ (+*2)||0$ and Right wins.  Note that if Left plays $H_{k_i}$ to $H_2$, leaving $\ds \sum_{i'=1}^{n-1} H_{k_{i'}} -(n-1)H_2 \ (+*2)<0$ he loses.
+\end{enumerate}
+\end{proof}
+
+
+
+
+
+
+
+
+\begin{theorem}
+For $n\geq 3$ and $\ds G=\sum_{i=1}^nH_{k_i} -nH_2+*l$, $G<0$ if:
+\begin{enumerate}
+\item $*k_i=*l\ (+*2)$ for some $i$
+\item $\ds \sum_{j=1}^m *k_{i_j} =*l\ (+*2)$ for some set of $k_{i_j}$ with $m\leq n-2$.
+\end{enumerate}
+
+and $G||0$ otherwise.
+\end{theorem}
+
+
+
+
+
+\begin{proof}
+\begin{enumerate}
+\item Without loss of generality, let $k_i=k_n$.  Let $\ds G=H_{k_n} +\sum_{i=1}^{n-1} H_{k_i} -nH_2 + *l\ (+*2)$.  \\
+\par If Left moves first, his only move is to $\ds G=H_{k_n} +\sum_{i=1}^n H_{k_i} -(n-1)H_2 + *l\ (+2)$, for which Right's response is to $\ds *l+\sum_{i=1}^n H_{k_i} -(n-1)H_2 + *l\ (+2)=\sum_{i=1}^n H_{k_i} -(n-1)H_2\ (+*2)<0$ by Theorem \ref{Theorem:k2equal}. (If Left moves in $*l$ he loses since Right can move the remaining to 0.)\\
+\par If Right moves first, he moves to $\ds \sum_{i=1}^{n} H_{k_i} -nH_2<0$.
+
+\item
+Right wins by removing the $*l$ if he starts.  Right responds to Left's moves in the copies $-H_2$ by moving the relevant $H_{k_{i_j}}$'s to $*k_{i_j}$.  After all of them are eliminated, we have $\ds \sum_{j=1}^{n-m} H_j +\sum_{j=1}^m *k_{i_j} +(n-m) H_2 + *l=\sum_{j=1}^{n-m} H_j-(n-m)H_2\ (+*2)<0$  by Theorem \ref{Theorem:k2equal}.\\
+
+
+\end{enumerate}
+If none of these conditions are met, Left moves to $\ds \sum_{i=1}^n H_{k_i} -(n-1)H_2+*l$.  Right's responses are to $\ds \sum_{i'=1}^n H_{k_{i'}} -(n-1)H_2+*l'$ where $l'$ is either $l$, $l\oplus 2$ or $l\oplus k_j$, leaving a position in the same form as above, so by induction the position eventually becomes on of the form $H_{k_1}+H_{k_2}-2H_2+*l$ where $l\neq 0,2$.  BLAH BLAH
+\par Of course, if Right starts, he moves $*l$ to 0 winning by Theorem \ref{Theorem:k2equal}.
+
+
+\end{proof}
+
+
+
+
+\begin{theorem}
+$$\sum_{i=1}^n H_{k_i} -(n-1)H_2+*m||0$$
+if $k_j=m$ for some j or $\sum_{j=1}^p *k_{i_j}=*m$ for $p\leq n-3$.
+\end{theorem}
+\begin{proof}
+Left can win immediately by moving to $\ds \sum_{i=1}^n H_{k_i} -(n-2)H_2 +*l$ which has atomic weight 2.\\
+If $k_j=m$ for some j or $\sum_{j=1}^p *k_{i_j}=*m$ for $p\leq n-3$, Right moves $H_{k_r}$ to 0 for $r\neq k_{i_j}$ leaving a position covered in the previous theorem.\\
+If none of these are true, each of Right's moves in $H_i$ is countered by Left removing a copy of $-H_2$ leaving a position with fewer hockey sticks, which is confused with 0 by induction.  Eventually the position becomes $H_{k_r}+H_{k_s}-H_2+*p$ and $p\neq 2$ which is greater than 0 by Lemma \ref{Lemma:oplus}.
+\end{proof}
+
+
+
+\begin{conjecture}
+\item For $k_i,j>2$: $\ds \sum_{i=1}^n H_{k_i}-H_j-(n-1)H_2\ (+*m)||0$
+\end{conjecture}
+\begin{proof}
+Left removes a copy of $H_2$ on his turn while Right removes $H_{k_i}'s$.  After $n-1$ moves, the position is $H_{k_j}-H_j+*m||0$ for some $m$.  Note that Right must respond to Left's move of $-H_2$ to 0 by moving $H_{k_i}$ to 0 (or $*2$, $*k_i$), and Left must respond similarly.
+\end{proof}
+
+
+Also
+\begin{conjecture}
+For $k_i,k_j>2$: $\ds \sum_{i=1}^n H_{k_i}-\sum_{j=1}^m H_{k_j}-(n-m )H_2 ||0$
+\end{conjecture}
+\begin{proof}
+We will consider the case when Left starts, showing he can win
+Left plays by removing $-H_2$, while Right plays $H_{k_i}$ to 0 (possibly to $*2$ or $*k_i$).  After $n-m$ moves, we are left with 
+$$\sum_{p=1}^{n-m} H_{k_{i_p}}-\sum_{j=1}^{n-m} H_{k_j} +*n$$
+for some value of $n$, with Left to move.  Since the above position is confused with 0 by Theorem \ref{Theorem:Equal}, Left wins.\\
+If Right starts, the situation is essentially identical.
+\end{proof}
+
+
+
+
+
+
+
+
+\newpage
+%%% REMOVELATER
+
+\section{Harder positions}
+Now consider the position:
+\begin{picture}(50,20)
+\makebrick{(10,0)}\makebrick{(30,0)}\makebrick{(0,10)}\makebrick{(20,10)}
+\end{picture}
+This game has value given by:
+$$S:=\{*,*2,*2,0|*2,P_{0,2},0,*3\}=\{0,*,*2|0,*2,*3\}=P_{0,\{2,3\}}$$
+
+
+
+
+
+\subsection{Can we get any wobbly value?}
+Consider:\\
+\begin{picture}(60,40)
+\makebrick{(20,0)}\makebrick{(10,10)}\makebrick{(30,10)}\makebrick{(0,20)}
+\end{picture} $=\{0,*2,*,*|0,*,*3,*\}=P_{1,3}$
+
+
+
+
+
+
+\begin{theorem}
+We have $*:P_{km}=P_{k+1,m+1}$
+\end{theorem}
+\begin{proof}
+We compute $*:P_{km}$ directly getting:
+$$*:P_{km}=\{0,*:P_{km}^L,0,0:P_{km}^R\}=\{0,*:0,*:*,...,*:*k,*:*(k+1)|0,*:0,...,*:*k,*:*m\}=\{0,*,...,*(k+1),*(k+2)|0,*,...,*(k+1),*(m+1)\}=P_{k+1,m+1}$$
+\end{proof}
+
+
+
+\end{document}
